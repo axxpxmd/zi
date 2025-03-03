@@ -29,7 +29,6 @@ use App\Models\Pegawai;
 use App\Models\UnitKerja;
 use App\Models\ModelHasRole;
 use App\Models\UserUnitKerja;
-use App\Models\VerifikatorTempat;
 use Spatie\Permission\Models\Role;
 
 class PenggunaController extends Controller

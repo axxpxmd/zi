@@ -65,5 +65,11 @@
             <span>Indikator 2</span>
         </a>
     </li>
+    <li class="no-b">
+        <a href="{{ route('pengungkit-indikator-3.index') }}">
+            <i class="icon icon-document-text text-warning s-18"></i>
+            <span>Indikator 3</span>
+        </a>
+    </li>
     @endcan
 </ul>

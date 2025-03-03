@@ -35,16 +35,16 @@ class PengungkitIndikator2Controller extends Controller
     {
         $indikator1_id = $request->indikator1_id;
 
-        $datas = PengungkitIndikator2::select("n_pengungkit_indikator2", "bobot", "id")
+        $datas = PengungkitIndikator2::select("n_pengungkit_indikator2", "bobot", "id", "pengungkit_indikator1_id")
             ->where('pengungkit_indikator1_id', $indikator1_id)
             ->get();
 
         return DataTables::of($datas)
             ->addColumn('action', function ($p) {
-                // return "
-                // <a href='#' onclick='edit(" . $p->id . ")' class='text-success' title='Edit'><i class='icon icon-edit mr-1'></i></a>
-                // <a href='#' onclick='remove(" . $p->id . ")' class='text-danger mr-2' title='Hapus'><i class='icon icon-remove'></i></a>";
-                return "-";
+                return "<a href='" . route('pengungkit-indikator-3.create', ['pengungkit_indikator1_id' => $p->pengungkit_indikator1_id, 'pengungkit_indikator2_id' => $p->id]) . "' class='text-success' title='Menambahkan indikator 3'><i class='icon icon-add_circle mr-1'></i></a>";
+            })
+            ->addColumn('pengungkit_indikator3', function ($p) {
+                return $p->pengungkit_indikator3->count();
             })
             ->addIndexColumn()
             ->rawColumns(['action'])
