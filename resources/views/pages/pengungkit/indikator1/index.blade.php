@@ -44,8 +44,8 @@
                             <div class="form-row form-inline">
                                 <div class="col-md-12">
                                     <div class="form-group mt-1">
-                                        <label for="n_bab" class="col-form-label s-12 col-md-4">Nama<span class="text-danger ml-1">*</span></label>
-                                        <input type="text" name="n_bab" id="n_bab" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off" required/>
+                                        <label for="n_pengungkit_indikator1" class="col-form-label s-12 col-md-4">Nama<span class="text-danger ml-1">*</span></label>
+                                        <input type="text" name="n_pengungkit_indikator1" id="n_pengungkit_indikator1" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off" required/>
                                     </div>
                                     <div class="form-group m-0">
                                         <label for="bobot" class="col-form-label s-12 col-md-4">Bobot</label>
@@ -78,7 +78,7 @@
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},
-            {data: 'n_bab', name: 'n_bab'},
+            {data: 'n_pengungkit_indikator1', name: 'n_pengungkit_indikator1'},
             {data: 'bobot', name: 'bobot'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
         ]
@@ -95,7 +95,7 @@
         $('input[name=_method]').val('POST');
         $('#txtAction').html('');
         $('#reset').show();
-        $('#n_bab').focus();
+        $('#n_pengungkit_indikator1').focus();
     }
 
     add();
@@ -137,7 +137,7 @@
         $('input[name=_method]').val('PATCH');
         $.get("{{ route($route.'edit', ':id') }}".replace(':id', id), function(data){
             $('#id').val(data.id);
-            $('#n_bab').val(data.n_bab).focus();
+            $('#n_pengungkit_indikator1').val(data.n_pengungkit_indikator1).focus();
             $('#bobot').val(data.bobot);
         }, "JSON").fail(function(){
             reload();

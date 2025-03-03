@@ -70,4 +70,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('bab', 'BabController');
         Route::post('bab/api', 'BabController@api')->name('bab.api');
     });
+
+    // Pengungkit
+    Route::namespace('Pengungkit')->group(function () {
+        // indikator 1
+        Route::resource('pengungkit-indikator-1', 'PengungkitIndikator1Controller');
+        Route::post('pengungkit-indikator-1/api', 'PengungkitIndikator1Controller@api')->name('pengungkit-indikator-1.api');
+    });
 });

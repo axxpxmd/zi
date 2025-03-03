@@ -54,15 +54,9 @@
     @can('data-pengungkit')
     <li class="header light"><strong>DATA PENGUNGKIT</strong></li>
     <li class="no-b">
-        <a href="{{ route('unit-kerja.index') }}">
-            <i class="icon icon-building text-yellow s-18"></i>
-            <span>Unit Kerja</span>
-        </a>
-    </li>
-    <li class="no-b">
-        <a href="{{ route('waktu.index') }}">
-            <i class="icon icon-timer text-primary s-18"></i>
-            <span>Waktu</span>
+        <a href="{{ route('pengungkit-indikator-1.index') }}">
+            <i class="icon icon-document-text text-success s-18"></i>
+            <span>Indikator 1</span>
         </a>
     </li>
     @endcan
