@@ -1,0 +1,69 @@
+<ul class="sidebar-menu">
+    <li class="header"><strong>MAIN NAVIGATION</strong></li>
+    <li>
+        <a href="{{ route('home') }}">
+            <i class="icon icon-home red-text s-18"></i>
+            <span>Home</span>
+        </a>
+    </li>
+    @can('master-role')
+    <li class="header light"><strong>ROLE</strong></li>
+    <li class="no-b">
+        <a href="{{ route('master-role.permission.index') }}">
+            <i class="icon icon-clipboard-list text-red s-18"></i>
+            <span>Permission</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('master-role.role.index') }}">
+            <i class="icon icon-key3 amber-text s-18"></i>
+            <span>Role</span>
+        </a>
+    </li>
+    @endcan
+    @can('master-pegawai')
+    <li class="header light"><strong>PENGGUNA</strong></li>
+    <li class="no-b">
+        <a href="{{ route('pengguna.index') }}">
+            <i class="icon icon-user-o text-success s-18"></i>
+            <span>Pengguna</span>
+        </a>
+    </li>
+    @endcan
+    @can('master-data')
+    <li class="header light"><strong>MASTER DATA</strong></li>
+    <li class="no-b">
+        <a href="{{ route('unit-kerja.index') }}">
+            <i class="icon icon-building text-yellow s-18"></i>
+            <span>Unit Kerja</span>
+        </a>
+    </li>
+    <li class="no-b">
+        <a href="{{ route('waktu.index') }}">
+            <i class="icon icon-timer text-primary s-18"></i>
+            <span>Waktu</span>
+        </a>
+    </li>
+    <li class="no-b">
+        <a href="{{ route('bab.index') }}">
+            <i class="icon icon-document-text text-danger s-18"></i>
+            <span>BAB</span>
+        </a>
+    </li>
+    @endcan
+    @can('data-pengungkit')
+    <li class="header light"><strong>DATA PENGUNGKIT</strong></li>
+    <li class="no-b">
+        <a href="{{ route('unit-kerja.index') }}">
+            <i class="icon icon-building text-yellow s-18"></i>
+            <span>Unit Kerja</span>
+        </a>
+    </li>
+    <li class="no-b">
+        <a href="{{ route('waktu.index') }}">
+            <i class="icon icon-timer text-primary s-18"></i>
+            <span>Waktu</span>
+        </a>
+    </li>
+    @endcan
+</ul>
