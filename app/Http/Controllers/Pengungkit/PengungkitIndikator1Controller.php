@@ -29,9 +29,9 @@ class PengungkitIndikator1Controller extends Controller
 
     public function api(Request $request)
     {
-        $tempats = PengungkitIndikator1::select("n_pengungkit_indikator1", "bobot", "id")->orderBy('id', 'DESC')->get();
+        $datas = PengungkitIndikator1::select("n_pengungkit_indikator1", "bobot", "id")->orderBy('id', 'DESC')->get();
 
-        return DataTables::of($tempats)
+        return DataTables::of($datas)
             ->addColumn('action', function ($p) {
                 // return "
                 // <a href='#' onclick='edit(" . $p->id . ")' class='text-success' title='Edit'><i class='icon icon-edit mr-1'></i></a>
@@ -54,11 +54,11 @@ class PengungkitIndikator1Controller extends Controller
         $bobot = $request->bobot;
         $n_pengungkit_indikator1 = $request->n_pengungkit_indikator1;
 
-        $tempat = new PengungkitIndikator1();
-        $tempat->bobot = $bobot;
-        $tempat->n_pengungkit_indikator1 = $n_pengungkit_indikator1;
-        $tempat->bab_id = 1;
-        $tempat->save();
+        $data = new PengungkitIndikator1();
+        $data->bobot = $bobot;
+        $data->n_pengungkit_indikator1 = $n_pengungkit_indikator1;
+        $data->bab_id = 1;
+        $data->save();
 
         return response()->json([
             'message' => 'Data ' . $this->title . ' berhasil tersimpan.'
@@ -83,8 +83,8 @@ class PengungkitIndikator1Controller extends Controller
         $bobot = $request->bobot;
         $n_pengungkit_indikator1 = $request->n_pengungkit_indikator1;
 
-        $tempat = PengungkitIndikator1::find($id);
-        $tempat->update([
+        $data = PengungkitIndikator1::find($id);
+        $data->update([
             'bobot' => $bobot,
             'n_pengungkit_indikator1' => $n_pengungkit_indikator1
         ]);

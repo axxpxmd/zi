@@ -29,9 +29,9 @@ class UnitKerjaController extends Controller
 
     public function api(Request $request)
     {
-        $tempats = UnitKerja::select("n_unit_kerja", "alamat", "id")->orderBy('id', 'DESC')->get();
+        $datas = UnitKerja::select("n_unit_kerja", "alamat", "id")->orderBy('id', 'DESC')->get();
 
-        return DataTables::of($tempats)
+        return DataTables::of($datas)
             ->addColumn('action', function ($p) {
                 return "
                 <a href='#' onclick='edit(" . $p->id . ")' class='text-success' title='Edit'><i class='icon icon-edit mr-1'></i></a>
@@ -53,10 +53,10 @@ class UnitKerjaController extends Controller
         $n_unit_kerja = $request->n_unit_kerja;
         $alamat = $request->alamat;
 
-        $tempat = new UnitKerja();
-        $tempat->n_unit_kerja = $n_unit_kerja;
-        $tempat->alamat = $alamat;
-        $tempat->save();
+        $data = new UnitKerja();
+        $data->n_unit_kerja = $n_unit_kerja;
+        $data->alamat = $alamat;
+        $data->save();
 
         return response()->json([
             'message' => 'Data ' . $this->title . ' berhasil tersimpan.'
@@ -81,8 +81,8 @@ class UnitKerjaController extends Controller
         $n_unit_kerja = $request->n_unit_kerja;
         $alamat = $request->alamat;
 
-        $tempat = UnitKerja::find($id);
-        $tempat->update([
+        $data = UnitKerja::find($id);
+        $data->update([
             'n_unit_kerja' => $n_unit_kerja,
             'alamat' => $alamat
         ]);

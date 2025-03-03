@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\MasterData;
+namespace App\Http\Controllers\Pengungkit;
 
 use Yajra\DataTables\Facades\DataTables;
 
@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 // Models
-use App\Models\BAB;
+use App\Models\PengungkitIndikator2;
 
-class BabController extends Controller
+class PengungkitIndikator2Controller extends Controller
 {
-    protected $route = 'bab.';
-    protected $view  = 'pages.masterData.bab.';
-    protected $title = 'BAB';
+    protected $route = 'pengungkit-indikator-2.';
+    protected $view  = 'pages.pengungkit.indikator2.';
+    protected $title = 'Pengungkit Indikator 2';
 
     public function index()
     {
@@ -29,7 +29,7 @@ class BabController extends Controller
 
     public function api(Request $request)
     {
-        $datas = BAB::select("n_bab", "bobot", "id")->orderBy('id', 'DESC')->get();
+        $datas = PengungkitIndikator2::select("n_pengungkit_indikator2", "bobot", "id")->get();
 
         return DataTables::of($datas)
             ->addColumn('action', function ($p) {
@@ -46,18 +46,19 @@ class BabController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'n_bab' => 'required',
+            'n_pengungkit_indikator1' => 'required',
             'bobot' => 'required|max:100'
         ]);
 
         // get params
         $bobot = $request->bobot;
-        $n_bab = $request->n_bab;
+        $n_pengungkit_indikator1 = $request->n_pengungkit_indikator1;
 
-        $data = new BAB();
-        $data->bobot = $bobot;
-        $data->n_bab = $n_bab;
-        $data->save();
+       $data = new PengungkitIndikator2();
+       $data->bobot = $bobot;
+       $data->n_pengungkit_indikator1 = $n_pengungkit_indikator1;
+       $data->pengungkit_indikator_id = 1;
+       $data->save();
 
         return response()->json([
             'message' => 'Data ' . $this->title . ' berhasil tersimpan.'
@@ -66,7 +67,7 @@ class BabController extends Controller
 
     public function edit($id)
     {
-        $data = BAB::where('id', $id)->first();
+        $data = PengungkitIndikator2::where('id', $id)->first();
 
         return $data;
     }
@@ -74,18 +75,18 @@ class BabController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'n_bab' => 'required',
+            'n_pengungkit_indikator1' => 'required',
             'bobot' => 'required|max:100'
         ]);
 
         // get params
         $bobot = $request->bobot;
-        $n_bab = $request->n_bab;
+        $n_pengungkit_indikator1 = $request->n_pengungkit_indikator1;
 
-        $data = BAB::find($id);
-        $data->update([
+       $data = PengungkitIndikator2::find($id);
+       $data->update([
             'bobot' => $bobot,
-            'n_bab' => $n_bab
+            'n_pengungkit_indikator1' => $n_pengungkit_indikator1
         ]);
 
         return response()->json([
@@ -95,7 +96,7 @@ class BabController extends Controller
 
     public function destroy($id)
     {
-        BAB::where('id', $id)->delete();
+        PengungkitIndikator2::where('id', $id)->delete();
 
         return response()->json([
             'message' => 'Data ' . $this->title . ' berhasil dihapus.'
