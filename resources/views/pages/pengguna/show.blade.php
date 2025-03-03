@@ -105,12 +105,12 @@
                                             <div class="tab-content" id="v-pills-tabContent">
                                                 @foreach ($tahuns as $key => $p)
                                                 @php
-                                                    $tempats = App\Models\VerifikatorTempat::where('user_id', $pegawai->user_id)->where('tahun_id', $p->id)->get();
+                                                    $unitKerjas = App\Models\UserUnitKerja::where('user_id', $pegawai->user_id)->where('tahun_id', $p->id)->get();
                                                 @endphp
                                                 <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}" id="data{{ $key }}" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                                    @forelse ($tempats as $key1 => $h)
+                                                    @forelse ($unitKerjas as $key1 => $h)
                                                     <li>
-                                                        {{ $h->tempat->n_unit_kerja }}
+                                                        {{ $h->unitKerja->n_unit_kerja }}
                                                         <a href="{{ route('pengguna.deleteVerifikatorTempat', $h->id) }}" onclick="return confirm('Yakin ingin menghapus data ini?')"   class="text-danger"><i class="icon icon-times ml-2"></i></a>
                                                     </li>
                                                     @empty
@@ -195,7 +195,7 @@
                                             <div class="form-group mb-1">
                                                 <label class="col-form-label s-12 col-md-2">Tahun</label>
                                                 <div class="col-md-6 p-0 bg-light">
-                                                    <select name="tahun_id" id="tahun_id" onchange="getTempats()" class="select2 form-control r-0 light s-12">
+                                                    <select name="tahun_id" id="tahun_id" onchange="getUnitKerja()" class="select2 form-control r-0 light s-12">
                                                         @foreach($tahuns as $key=>$i)
                                                         <option value="{{ $i->id }}">{{ $i->tahun }}</option>
                                                         @endforeach
@@ -206,8 +206,8 @@
                                                 <label class="col-form-label s-12 col-md-2">Perangkat Daerah</label>
                                                 <div class="col-md-6 p-0 bg-light">
                                                     <select name="opds[]" id="opds" placeholder="" class="select2 form-control r-0 light s-12" multiple="multiple">
-                                                        @foreach($opds as $key=>$opds)
-                                                        <option value="{{ $opds->id }}">{{ $opds->n_unit_kerja }}</option>
+                                                        @foreach($unit_kerjas as $key=>$unit_kerja)
+                                                        <option value="{{ $unit_kerja->id }}">{{ $unit_kerja->n_unit_kerja }}</option>
                                                         @endforeach
                                                     <select>
                                                 </div>
@@ -292,8 +292,8 @@
         $(this).addClass('was-validated');
     });
 
-    getTempats();
-    function getTempats(){
+    getUnitKerja();
+    function getUnitKerja(){
         tahun_id = $('#tahun_id').val();
         user_id  = $('#user_id').val();
 
@@ -304,7 +304,7 @@
             if(data.length > 0){
                 $.each(data, function(index, value){
                     val = "'" + value.name + "'";
-                    $('#viewPermission').append('<li>' + value.tempat + '</li>');
+                    $('#viewPermission').append('<li>' + value.unit_kerja + '</li>');
                 });
             }else{
                 $('#viewPermission').html("<em>Data OPD Kosong.</em>");

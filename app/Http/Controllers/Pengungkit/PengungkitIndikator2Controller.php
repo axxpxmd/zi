@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 // Models
+use App\Models\PengungkitIndikator1;
 use App\Models\PengungkitIndikator2;
 
 class PengungkitIndikator2Controller extends Controller
@@ -21,15 +22,22 @@ class PengungkitIndikator2Controller extends Controller
         $route = $this->route;
         $title = $this->title;
 
+        $indikator1 = PengungkitIndikator1::select("n_pengungkit_indikator1", "id")->get();
+
         return view($this->view . 'index', compact(
             'route',
-            'title'
+            'title',
+            'indikator1'
         ));
     }
 
     public function api(Request $request)
     {
-        $datas = PengungkitIndikator2::select("n_pengungkit_indikator2", "bobot", "id")->get();
+        $indikator1_id = $request->indikator1_id;
+
+        $datas = PengungkitIndikator2::select("n_pengungkit_indikator2", "bobot", "id")
+            ->where('pengungkit_indikator1_id', $indikator1_id)
+            ->get();
 
         return DataTables::of($datas)
             ->addColumn('action', function ($p) {
@@ -54,11 +62,10 @@ class PengungkitIndikator2Controller extends Controller
         $bobot = $request->bobot;
         $n_pengungkit_indikator1 = $request->n_pengungkit_indikator1;
 
-       $data = new PengungkitIndikator2();
-       $data->bobot = $bobot;
-       $data->n_pengungkit_indikator1 = $n_pengungkit_indikator1;
-       $data->pengungkit_indikator_id = 1;
-       $data->save();
+        $data = new PengungkitIndikator2();
+        $data->bobot = $bobot;
+        $data->n_pengungkit_indikator1 = $n_pengungkit_indikator1;
+        $data->save();
 
         return response()->json([
             'message' => 'Data ' . $this->title . ' berhasil tersimpan.'
@@ -83,8 +90,8 @@ class PengungkitIndikator2Controller extends Controller
         $bobot = $request->bobot;
         $n_pengungkit_indikator1 = $request->n_pengungkit_indikator1;
 
-       $data = PengungkitIndikator2::find($id);
-       $data->update([
+        $data = PengungkitIndikator2::find($id);
+        $data->update([
             'bobot' => $bobot,
             'n_pengungkit_indikator1' => $n_pengungkit_indikator1
         ]);

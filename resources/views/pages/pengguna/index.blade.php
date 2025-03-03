@@ -52,7 +52,7 @@
                                         <thead>
                                             <th width="5%"></th>
                                             <th width="40%">Nama Instansi</th>
-                                            <th width="30%">Tempat</th>
+                                            <th width="30%">Unit Kerja</th>
                                             <th width="20%">Nama Login</th>
                                             <th width="5%"></th>
                                         </thead>
@@ -88,9 +88,9 @@
                                             <div class="form-group mt-1" id="perangkatDaerahDisplay">
                                                 <label class="col-form-label s-12 col-md-2">Perangkat Daerah</label>
                                                 <div class="col-md-6 p-0 bg-light">
-                                                    <select class="select2 form-control r-0 light s-12" name="tempat_id" id="tempat_id" autocomplete="off">
+                                                    <select class="select2 form-control r-0 light s-12" name="unit_kerja_id" id="unit_kerja_id" autocomplete="off">
                                                         <option value="">PIlih</option>
-                                                        @foreach ($tempat as $i)
+                                                        @foreach ($unit_kerja as $i)
                                                             <option value="{{ $i->id }}">{{ $i->n_unit_kerja }}</option>
                                                         @endforeach
                                                     </select>
@@ -129,7 +129,7 @@
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},
             {data: 'nama_instansi', name: 'nama_instansi'},
-            {data: 'tempat', name: 'tempat'},
+            {data: 'unit_kerja', name: 'unit_kerja'},
             {data: 'username', name: 'username'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
         ]

@@ -17,18 +17,19 @@ namespace App\Http\Controllers\Pengguna;
 use Yajra\DataTables\Facades\DataTables;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+
 use App\Http\Controllers\Controller;
 
 // Model
 use App\User;
-use App\TmResult;
-use App\Models\Tempat;
-use App\Models\Pegawai;
-use App\Models\ModelHasRole;
 use App\Models\Time;
+use App\Models\Pegawai;
+use App\Models\UnitKerja;
+use App\Models\ModelHasRole;
+use App\Models\UserUnitKerja;
 use App\Models\VerifikatorTempat;
-use Illuminate\Http\Client\Request as ClientRequest;
 use Spatie\Permission\Models\Role;
 
 class PenggunaController extends Controller
@@ -44,13 +45,13 @@ class PenggunaController extends Controller
         $title = $this->title;
 
         $roles = Role::select('id', 'name')->get();
-        $tempat = Tempat::select('id', 'n_unit_kerja')->get();
+        $unit_kerja = UnitKerja::select('id', 'n_unit_kerja')->get();
 
         return view($this->view . 'index', compact(
             'route',
             'title',
             'roles',
-            'tempat'
+            'unit_kerja'
         ));
     }
 
@@ -67,9 +68,9 @@ class PenggunaController extends Controller
             ->editColumn('nama_instansi', function ($p) {
                 return "<a href='" . route($this->route . 'show', $p->id) . "' class='text-primary' title='Show Data'>" . $p->nama_instansi . "</a>";
             })
-            ->editColumn('tempat', function ($p) {
-                if ($p->tempat != null) {
-                    return $p->tempat->n_unit_kerja;
+            ->editColumn('unit_kerja', function ($p) {
+                if ($p->unitKerja != null) {
+                    return $p->unitKerja->n_unit_kerja;
                 } else {
                     return '-';
                 }
@@ -87,14 +88,14 @@ class PenggunaController extends Controller
         $route = $this->route;
         $title = $this->title;
 
-        $roleId = $request->role_id;
-        $tempatId = $request->tempat_id;
+        $role_id = $request->role_id;
+        $unit_kerja_id = $request->unit_kerja_id;
 
-        $role = Role::where('id', $roleId)->first();
-        $tempat = Tempat::where('id', $tempatId)->first();
-        $opds = Tempat::select('id', 'n_unit_kerja')->get();
+        $role = Role::where('id', $role_id)->first();
+        $unit_kerja = UnitKerja::where('id', $unit_kerja_id)->first();
+        $unit_kerjas = UnitKerja::select('id', 'n_unit_kerja')->get();
 
-        if ($roleId ==  null) {
+        if ($role_id ==  null) {
             return redirect()
                 ->route($this->route . 'index')
                 ->withErrors('Semua form wajid diisi.');
@@ -104,10 +105,10 @@ class PenggunaController extends Controller
             'route',
             'title',
             'role',
-            'roleId',
-            'tempatId',
-            'tempat',
-            'opds'
+            'role_id',
+            'unit_kerja_id',
+            'unit_kerja',
+            'unit_kerjas'
         ));
     }
 
@@ -123,15 +124,15 @@ class PenggunaController extends Controller
                 'jabatan_operator' => 'required',
                 'telp' => 'required|max:20',
                 'alamat' => 'required|max:100',
-                'tempatId' => 'required|unique:tm_pegawais,tempat_id'
+                'unit_kerja_id' => 'required|unique:tm_pegawais,tempat_id'
             ], [
-                'tempatId.unique' => 'Instansi ini telah memiliki login.',
+                'unit_kerja_id.unique' => 'Instansi ini telah memiliki login.',
             ]);
         }
 
         // Get Params
-        $tempat_id = $request->tempatId;
-        $role_id = $request->roleId;
+        $unit_kerja_id = $request->unit_kerja_id;
+        $role_id = $request->role_id;
         $username = $request->username;
         $password = '12345678';
         $nama_instansi = $request->nama_instansi;
@@ -144,7 +145,6 @@ class PenggunaController extends Controller
         $alamat = $request->alamat;
         $foto = 'default.png';
         $path = 'app\User';
-        $opds = $request->opds;
 
         /* Tahapan :
          * 1. tm_users
@@ -152,43 +152,35 @@ class PenggunaController extends Controller
          * 3. model_has_roles
          */
 
-        // Tahap 1
-        $user = new User();
-        $user->username = $username;
-        $user->password = Hash::make($password);
-        $user->save();
+        DB::transaction(function () use ($username, $password, $unit_kerja_id, $nama_instansi, $nama_kepala, $jabatan_kepala, $nama_operator, $jabatan_operator, $email, $telp, $alamat, $foto, $role_id, $path) {
+            // Tahap 1: Create User
+            $user = User::create([
+                'username' => $username,
+                'password' => Hash::make($password),
+            ]);
 
-        // Tahap 2
-        $pegawai = new Pegawai();
-        $pegawai->user_id = $user->id;
-        $pegawai->tempat_id = $tempat_id;
-        $pegawai->nama_instansi = $nama_instansi;
-        $pegawai->nama_kepala = $nama_kepala;
-        $pegawai->jabatan_kepala = $jabatan_kepala;
-        $pegawai->nama_operator = $nama_operator;
-        $pegawai->jabatan_operator = $jabatan_operator;
-        $pegawai->email = $email;
-        $pegawai->telp = $telp;
-        $pegawai->alamat = $alamat;
-        $pegawai->foto = $foto;
-        $pegawai->save();
+            // Tahap 2: Create Pegawai
+            Pegawai::create([
+                'user_id' => $user->id,
+                'unit_kerja_id' => $unit_kerja_id,
+                'nama_instansi' => $nama_instansi,
+                'nama_kepala' => $nama_kepala,
+                'jabatan_kepala' => $jabatan_kepala,
+                'nama_operator' => $nama_operator,
+                'jabatan_operator' => $jabatan_operator,
+                'email' => $email,
+                'telp' => $telp,
+                'alamat' => $alamat,
+                'foto' => $foto,
+            ]);
 
-        // Tahap 3
-        $model_has_role = new ModelHasRole();
-        $model_has_role->role_id = $role_id;
-        $model_has_role->model_type = $path;
-        $model_has_role->model_id = $user->id;
-        $model_has_role->save();
-
-        // Tahap 4
-        if ($request->opds) {
-            foreach ($request->opds as $key => $i) {
-                VerifikatorTempat::create([
-                    'user_id' => $user->id,
-                    'tempat_id' => $i
-                ]);
-            }
-        }
+            // Tahap 3: Assign Role
+            ModelHasRole::create([
+                'role_id' => $role_id,
+                'model_type' => $path,
+                'model_id' => $user->id,
+            ]);
+        });
 
         return response()->json([
             'message' => "Data " . $this->title . " berhasil tersimpan."
@@ -203,10 +195,10 @@ class PenggunaController extends Controller
 
         $pegawai = Pegawai::find($id);
         $tahuns  = Time::select('id', 'tahun')->get();
-        $verifikatorTempat = VerifikatorTempat::where('user_id', $pegawai->user_id)->get();
-        $verifikatorTempatArray = VerifikatorTempat::select('tempat_id')->where('user_id', $pegawai->user_id)->get()->toArray();
+        $verifikatorTempat = UserUnitKerja::where('user_id', $pegawai->user_id)->get();
+        $verifikatorTempatArray = UserUnitKerja::select('unit_kerja_id')->where('user_id', $pegawai->user_id)->get()->toArray();
 
-        $opds = Tempat::select('id', 'n_unit_kerja')->get();
+        $unit_kerjas = UnitKerja::select('id', 'n_unit_kerja')->get();
 
         return view($this->view . 'show', compact(
             'tahuns',
@@ -215,7 +207,7 @@ class PenggunaController extends Controller
             'path',
             'pegawai',
             'verifikatorTempat',
-            'opds'
+            'unit_kerjas'
         ));
     }
 
@@ -224,14 +216,14 @@ class PenggunaController extends Controller
         $tahun_id = $request->tahun_id;
         $user_id = $request->user_id;
 
-        $verifikatorTempat = VerifikatorTempat::where('user_id', $user_id)
+        $verifikatorTempat = UserUnitKerja::where('user_id', $user_id)
             ->where('tahun_id', $tahun_id)
             ->get();
 
         $dataJson = [];
         foreach ($verifikatorTempat as $key => $i) {
             $dataJson[$key] = [
-                'tempat' => $i->tempat->n_unit_kerja
+                'unit_kerja' => $i->unitKerja->n_unit_kerja
             ];
         }
 
@@ -291,19 +283,19 @@ class PenggunaController extends Controller
         // Tahap 4
         if ($request->opds) {
             foreach ($request->opds as $key => $i) {
-                $check = VerifikatorTempat::where('user_id', $pegawai->user_id)
+                $check = UserUnitKerja::where('user_id', $pegawai->user_id)
                     ->where('tahun_id', $request->tahun_id)
-                    ->where('tempat_id', $i)
+                    ->where('unit_kerja_id', $i)
                     ->get();
 
                 if ($check->count() > 0) {
                     return response()->json([
-                        'message' => 'OPD ' . $check[0]->tempat->n_unit_kerja . ' telah terdaftar pada tahun ini.'
+                        'message' => 'OPD ' . $check[0]->unitKerja->n_unit_kerja . ' telah terdaftar pada tahun ini.'
                     ], 422);
                 } else {
-                    VerifikatorTempat::create([
+                    UserUnitKerja::create([
                         'user_id' => $pegawai->user_id,
-                        'tempat_id' => $i,
+                        'unit_kerja_id' => $i,
                         'tahun_id' => $request->tahun_id
                     ]);
                 }
@@ -356,7 +348,7 @@ class PenggunaController extends Controller
 
     public function deleteVerifikatorTempat($id)
     {
-        VerifikatorTempat::where('id', $id)->delete();
+        UserUnitKerja::where('id', $id)->delete();
 
         return back()
             ->withSuccess('berhasil terhapus.');

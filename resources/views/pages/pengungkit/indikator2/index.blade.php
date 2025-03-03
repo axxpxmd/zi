@@ -19,6 +19,16 @@
             <div class="col-md-8">
                 <div class="card no-b">
                     <div class="card-body">
+                        <div class="form-group row">
+                            <label for="indikator1_id_filter" class="col-form-label s-12 col-md-4 text-right font-weight-bold">Indikator 1 : </label>
+                            <div class="col-sm-4">
+                                <select name="indikator1_id_filter" id="indikator1_id_filter" class="select2 form-control r-0 light s-12" onchange="selectOnChange()">
+                                    @foreach ($indikator1 as $i)
+                                        <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator1 }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
                                 <thead>
@@ -74,7 +84,10 @@
         order: [ 0, 'asc' ],
         ajax: {
             url: "{{ route($route.'api') }}",
-            method: 'POST'
+            method: 'POST',
+            data: function (data) {
+                data.indikator1_id = $('#indikator1_id_filter').val();
+            }
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},

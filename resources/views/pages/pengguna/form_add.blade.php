@@ -31,10 +31,10 @@
                         <div class="card-body">
                             <form class="needs-validation" id="form" method="POST"  enctype="multipart/form-data" novalidate>
                                 {{ method_field('POST') }}
-                                <input type="hidden" name="roleId" value="{{ $roleId }}">
-                                <input type="hidden" name="tempatId" value="{{ $tempatId }}">
+                                <input type="hidden" name="role_id" value="{{ $role_id }}">
+                                <input type="hidden" name="unit_kerja_id" value="{{ $unit_kerja_id }}">
                                 <div class="form-row form-inline">
-                                    @if ($roleId == 5)
+                                    @if ($role_id == 5)
                                     <div class="col-md-8">
                                         <!-- user -->
                                         <div class="form-group m-0">
@@ -44,7 +44,7 @@
                                         <!-- pegawai -->
                                         <div class="form-group m-0">
                                             <label for="nama_instansi" class="col-form-label s-12 col-md-2">Nama Instansi<span class="text-danger ml-1">*</span></label>
-                                            <input type="text" name="nama_instansi" id="nama_instansi" class="form-control r-0 light s-12 col-md-6" autocomplete="off" value="{{ $tempat->n_unit_kerja }}" required/>
+                                            <input type="text" name="nama_instansi" id="nama_instansi" class="form-control r-0 light s-12 col-md-6" autocomplete="off" value="{{ $unit_kerja->n_unit_kerja }}" required/>
                                         </div>
                                         <div class="form-group m-0">
                                             <label for="nama_kepala" class="col-form-label s-12 col-md-2">Nama Kepala<span class="text-danger ml-1">*</span></label>
@@ -69,16 +69,6 @@
                                         <div class="form-group m-0">
                                             <label for="telp" class="col-form-label s-12 col-md-2">No Telp<span class="text-danger ml-1">*</span></label>
                                             <input type="text" name="telp" id="telp" class="form-control r-0 light s-12 col-md-6" autocomplete="off" required/>
-                                        </div>
-                                        <div class="form-group mb-1" id="display_perangkat_daerah">
-                                            <label class="col-form-label s-12 col-md-2">Perangkat Daerah <span class="text-danger ml-1">*</span></label>
-                                            <div class="col-md-6 p-0 bg-light">
-                                                <select name="opds[]" id="opds" placeholder="" class="select2 form-control r-0 light s-12" multiple="multiple" required>
-                                                    @foreach($opds as $key=>$opds)
-                                                    <option value="{{ $opds->id }}">{{ $opds->n_unit_kerja }}</option>
-                                                    @endforeach
-                                                <select>
-                                            </div>
                                         </div>
                                         <div class="form-group m-0">
                                             <label for="alamat" class="col-form-label s-12 col-md-2">Alamat<span class="text-danger ml-1">*</span></label>
