@@ -39,11 +39,13 @@ class PengungkitIndikator3Controller extends Controller
         $pengungkit_indikator1_id = $request->pengungkit_indikator1_id;
         $pengungkit_indikator2_id = $request->pengungkit_indikator2_id;
 
-        $datas = PengungkitIndikator3::select("tm_pengungkit_indikator3.n_pengungkit_indikator3", "tm_pengungkit_indikator3.bobot", "tm_pengungkit_indikator3.id")
+        $datas = PengungkitIndikator3::select("tm_pengungkit_indikator3.n_pengungkit_indikator3", "tm_pengungkit_indikator3.bobot", "tm_pengungkit_indikator3.id", "tm_pengungkit_indikator3.pengungkit_indikator2_id")
             ->join('tm_pengungkit_indikator2', 'tm_pengungkit_indikator3.pengungkit_indikator2_id', '=', 'tm_pengungkit_indikator2.id')
             ->where('tm_pengungkit_indikator2.pengungkit_indikator1_id', $pengungkit_indikator1_id)
-            ->where('tm_pengungkit_indikator3.pengungkit_indikator2_id', $pengungkit_indikator2_id)
-            ->orderBy('tm_pengungkit_indikator3.id', 'DESC')
+            ->when($pengungkit_indikator2_id != 0, function ($query) use ($pengungkit_indikator2_id) {
+                return $query->where('tm_pengungkit_indikator3.pengungkit_indikator2_id', $pengungkit_indikator2_id);
+            })
+            ->orderBy('tm_pengungkit_indikator3.id', 'ASC')
             ->get();
 
         return DataTables::of($datas)
@@ -53,8 +55,11 @@ class PengungkitIndikator3Controller extends Controller
             ->editColumn('n_pengungkit_indikator3', function ($p) {
                 return "<a href='" . route($this->route . 'show', $p->id) . "' class='text-primary' title='Show Data'>" . $p->n_pengungkit_indikator3 . "</a>";
             })
+            ->addColumn('pengungkitPertanyaan', function ($p) {
+                return $p->pengungkitPertanyaan->count() . "<a href='" . route('pengungkit-pertanyaan.create', ['pengungkit_indikator1_id' => $p->pengungkitIndikator2->pengungkit_indikator1_id, 'pengungkit_indikator2_id' => $p->pengungkit_indikator2_id, 'pengungkit_indikator3_id' => $p->id]) . "' class='text-success ml-2' title='Menambahkan pertanyaan'><i class='icon icon-add_circle mr-1'></i></a>";
+            })
             ->addIndexColumn()
-            ->rawColumns(['action', 'n_pengungkit_indikator3'])
+            ->rawColumns(['action', 'n_pengungkit_indikator3', 'pengungkitPertanyaan'])
             ->toJson();
     }
 

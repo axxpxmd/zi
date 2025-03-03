@@ -13,4 +13,9 @@ class PengungkitIndikator3 extends Model
     {
         return $this->belongsTo(PengungkitIndikator2::class, 'pengungkit_indikator2_id');
     }
+
+    public function pengungkitPertanyaan()
+    {
+        return $this->hasMany(PengungkitPertanyaan::class, 'pengungkit_indikator3_id');
+    }
 }

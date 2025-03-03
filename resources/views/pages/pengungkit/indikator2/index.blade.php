@@ -36,7 +36,6 @@
                                     <th width="60%">Nama</th>
                                     <th width="10%">Bobot</th>
                                     <th width="10%">Indikator 3</th>
-                                    <th width="10%"></th>
                                 </thead>
                                 <tbody></tbody>
                             </table>
@@ -95,7 +94,6 @@
             {data: 'n_pengungkit_indikator2', name: 'n_pengungkit_indikator2'},
             {data: 'bobot', name: 'bobot', className: 'text-center'},
             {data: 'pengungkit_indikator3', name: 'pengungkit_indikator3', className: 'text-center'},
-            {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
         ]
     });
 

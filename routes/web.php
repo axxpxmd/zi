@@ -84,5 +84,9 @@ Route::group(['middleware' => ['auth']], function () {
         // indikator 3
         Route::resource('pengungkit-indikator-3', 'PengungkitIndikator3Controller');
         Route::post('pengungkit-indikator-3/api', 'PengungkitIndikator3Controller@api')->name('pengungkit-indikator-3.api');
+
+        // pertanyaan
+        Route::resource('pengungkit-pertanyaan', 'PengungkitPertanyaanController');
+        Route::post('pengungkit-pertanyaan/api', 'PengungkitPertanyaanController@api')->name('pengungkit-pertanyaan.api');
     });
 });

@@ -40,14 +40,11 @@ class PengungkitIndikator2Controller extends Controller
             ->get();
 
         return DataTables::of($datas)
-            ->addColumn('action', function ($p) {
-                return "<a href='" . route('pengungkit-indikator-3.create', ['pengungkit_indikator1_id' => $p->pengungkit_indikator1_id, 'pengungkit_indikator2_id' => $p->id]) . "' class='text-success' title='Menambahkan indikator 3'><i class='icon icon-add_circle mr-1'></i></a>";
-            })
             ->addColumn('pengungkit_indikator3', function ($p) {
-                return $p->pengungkit_indikator3->count();
+                return $p->pengungkit_indikator3->count() . "<a href='" . route('pengungkit-indikator-3.create', ['pengungkit_indikator1_id' => $p->pengungkit_indikator1_id, 'pengungkit_indikator2_id' => $p->id]) . "' class='text-success ml-2' title='Menambahkan indikator 3'><i class='icon icon-add_circle mr-1'></i></a>";
             })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['pengungkit_indikator3'])
             ->toJson();
     }
 

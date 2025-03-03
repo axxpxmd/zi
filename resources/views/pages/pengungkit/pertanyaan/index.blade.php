@@ -32,22 +32,11 @@
                     <div class="card-body">
                         <div class="container col-md-12">
                             <div class="row mb-2">
-                                <label for="pengungkit_indikator1_id_filter" class="col-form-label s-12 col-sm-4 col-md-4 col-xl-3 text-right font-weight-bolder">Indikator 1 </label>
+                                <label for="pengungkit_indikator1_id_filter" class="col-form-label s-12 col-sm-4 col-md-4 col-xl-3 text-right font-weight-bolder">Indikator 3 </label>
                                 <div class="col-md-4">
-                                    <select name="pengungkit_indikator1_id_filter" id="pengungkit_indikator1_id_filter" class="select2 form-control r-0 light s-12">
-                                        @foreach ($indikator1 as $i)
-                                            <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator1 }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <label for="pengungkit_indikator2_id_filter" class="col-form-label s-12 col-sm-4 col-md-4 col-xl-3 text-right font-weight-bolder">Indikator 2 </label>
-                                <div class="col-md-4">
-                                    <select name="pengungkit_indikator2_id_filter" id="pengungkit_indikator2_id_filter" class="select2 form-control r-0 light s-12">
-                                        <option value="0">Semua</option>
-                                        @foreach ($indikator2 as $i)
-                                            <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator2 }}</option>
+                                    <select name="pengungkit_indikator3_id_filter" id="pengungkit_indikator3_id_filter" class="select2 form-control r-0 light s-12">
+                                        @foreach ($indikator3 as $i)
+                                            <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator3 }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -69,58 +58,13 @@
                                     <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <th width="5%">No</th>
-                                            <th width="65%">Nama</th>
-                                            <th width="10%">Bobot</th>
-                                            <th width="10%">Pertanyaan</th>
+                                            <th width="75%">Nama</th>
+                                            <th width="10%">Tipe Jawaban</th>
                                             <th width="5%"></th>
                                         </thead>
                                         <tbody></tbody>
                                     </table>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane animated fadeInUpShort" id="tambah-data" role="tabpanel">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="alert"></div>
-                        <div class="card">
-                            <h6 class="card-header"><strong>Tambah Data</strong></h6>
-                            <div class="card-body">
-                                <form class="needs-validation" action="{{ route($route.'create') }}" method="GET"  novalidate>
-                                    <div class="form-row form-inline">
-                                        <div class="col-md-8">
-                                            <div class="form-group mt-1">
-                                                <label class="col-form-label s-12 col-md-2">Indikator 1</label>
-                                                <div class="col-md-6 p-0 bg-light">
-                                                    <select name="pengungkit_indikator1_id" id="pengungkit_indikator1_id" class="select2 form-control r-0 light s-12">
-                                                        <option value="">Pilih</option>
-                                                        @foreach ($indikator1 as $i)
-                                                            <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator1 }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mt-1">
-                                                <label class="col-form-label s-12 col-md-2">Indikator 2</label>
-                                                <div class="col-md-6 p-0 bg-light">
-                                                    <select name="pengungkit_indikator2_id" id="pengungkit_indikator2_id" class="select2 form-control r-0 light s-12">
-                                                        <option value="">Pilih</option>
-                                                        @foreach ($indikator2 as $i)
-                                                            <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator2 }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mt-2">
-                                                <div class="col-md-2"></div>
-                                                <button type="submit" class="btn btn-primary btn-sm">Selanjutnya</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -141,15 +85,13 @@
             url: "{{ route($route.'api') }}",
             method: 'POST',
             data: function (data) {
-                data.pengungkit_indikator2_id = $('#pengungkit_indikator2_id_filter').val();
-                data.pengungkit_indikator1_id = $('#pengungkit_indikator1_id_filter').val();
+                data.pengungkit_indikator3_id = $('#pengungkit_indikator3_id_filter').val();
             }
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},
-            {data: 'n_pengungkit_indikator3', name: 'n_pengungkit_indikator3'},
-            {data: 'bobot', name: 'bobot', className: 'text-center'},
-            {data: 'pengungkitPertanyaan', name: 'pengungkitPertanyaan', className: 'text-center'},
+            {data: 'n_pertanyaan', name: 'n_pertanyaan'},
+            {data: 'tipe_jawaban', name: 'bobot', className: 'text-center'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
         ]
     });
