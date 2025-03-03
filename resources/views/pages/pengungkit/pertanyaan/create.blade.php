@@ -72,9 +72,11 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group mt-1">
-                                            <label for="keterangan" class="text-right s-12 col-md-2">Keterangan<span class="text-danger ml-1">*</span></label>
-                                            <textarea type="text" name="keterangan" id="keterangan" rows="5" class="form-control r-0 light s-12 col-md-4" autocomplete="off" required></textarea>
+                                        <div class="table-responsive">
+                                            <div class="form-group m-0 mt-2">
+                                                <label for="keterangan" class="text-right s-12 col-md-2">Keterangan<span class="text-danger ml-1">*</span></label>
+                                                <textarea name="keterangan" class="form-control r-0 light s-12 col-md-10" id="tiny"></textarea>
+                                            </div>
                                         </div>
                                         <div class="form-group mt-2">
                                             <label for="bab" class="text-right s-12 col-md-2"></label>
@@ -96,6 +98,19 @@
 <script src="https://cdn.tiny.cloud/1/asaiytuil3ir60nu7aw6buvvgkzso2azpt3cgv2iss02fstk/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@2/dist/tinymce-jquery.min.js"></script>
 <script type="text/javascript">
-    //
+    $('textarea#tiny').tinymce({
+        height: 300,
+        menubar: false,
+        branding: false,
+        placeholder: 'Ketikkan keterangan disini...',
+        plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+            'anchor', 'searchreplace', 'visualblocks', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+        ],
+        toolbar: 'undo redo | blocks | bold italic backcolor | ' +
+        'alignleft aligncenter alignright alignjustify | lineheight |' +
+        'bullist numlist outdent indent | removeformat | help'
+    });
 </script>
 @endsection
