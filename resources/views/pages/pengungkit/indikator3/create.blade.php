@@ -41,9 +41,9 @@
                                             <input type="text" readonly class="form-control r-0 light s-12 col-md-4" autocomplete="off" value="{{ $indikator1->n_pengungkit_indikator1 }}"/>
                                         </div>
                                         <div class="form-group m-0">
-                                            <label class="col-form-label s-12 col-md-2">Indikator 2</label>
+                                            <label class="col-form-label s-12 col-md-2">Indikator 2<span class="text-danger ml-1">*</span></label>
                                             <div class="col-md-4 p-0 bg-light">
-                                                <select name="pengungkit_indikator2_id" id="pengungkit_indikator2_id" class="select2 form-control r-0 light s-12">
+                                                <select name="pengungkit_indikator2_id" id="pengungkit_indikator2_id" class="select2 form-control r-0 light s-12" required>
                                                     @foreach ($indikators2 as $i)
                                                         <option value="{{ $i->id }}" {{ $i->id == $pengungkit_indikator2_id ? 'selected' : '-' }}>{{ $i->n_pengungkit_indikator2 }} ( {{ $i->bobot }} )</option>
                                                     @endforeach
@@ -52,12 +52,12 @@
                                         </div>
                                         <hr>
                                         <div class="form-group mt-1">
-                                            <label for="n_pengungkit_indikator3" class="text-right s-12 col-md-2">Nama Indikator 3</label>
-                                            <input type="text" name="n_pengungkit_indikator3" id="n_pengungkit_indikator3" class="form-control r-0 light s-12 col-md-4" autocomplete="off"/>
+                                            <label for="n_pengungkit_indikator3" class="text-right s-12 col-md-2">Nama Indikator 3<span class="text-danger ml-1">*</span></label>
+                                            <input type="text" name="n_pengungkit_indikator3" id="n_pengungkit_indikator3" class="form-control r-0 light s-12 col-md-4" autocomplete="off" required/>
                                         </div>
                                         <div class="form-group m-0">
-                                            <label for="bobot" class="text-right s-12 col-md-2">Bobot</label>
-                                            <input type="number" name="bobot" id="bobot" class="form-control r-0 light s-12 col-md-4" autocomplete="off"/>
+                                            <label for="bobot" class="text-right s-12 col-md-2">Bobot<span class="text-danger ml-1">*</span></label>
+                                            <input type="number" name="bobot" id="bobot" class="form-control r-0 light s-12 col-md-4" autocomplete="off" required/>
                                         </div>
                                         <div class="form-group mt-2">
                                             <label for="bab" class="text-right s-12 col-md-2"></label>

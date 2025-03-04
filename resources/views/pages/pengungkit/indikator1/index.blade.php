@@ -48,13 +48,13 @@
                                         <input type="text" name="n_pengungkit_indikator1" id="n_pengungkit_indikator1" placeholder="" class="form-control r-0 light s-12 col-md-8" autocomplete="off" required/>
                                     </div>
                                     <div class="form-group m-0">
-                                        <label for="bobot" class="col-form-label s-12 col-md-4">Bobot</label>
+                                        <label for="bobot" class="col-form-label s-12 col-md-4">Bobot<span class="text-danger ml-1">*</span></label>
                                         <textarea name="bobot" id="bobot" class="form-control r-0 light s-12 col-md-8" autocomplete="off"></textarea>
                                     </div>
                                     <div class="form-group mt-2">
                                         <div class="col-md-4"></div>
-                                        <button type="submit" class="btn btn-primary btn-sm" id="action"><i class="icon-save mr-2"></i>Simpan<span id="txtAction"></span></button>
-                                        <a class="btn btn-sm" onclick="add()" id="reset">Reset</a>
+                                        {{-- <button type="submit" class="btn btn-primary btn-sm" id="action"><i class="icon-save mr-2"></i>Simpan<span id="txtAction"></span></button>
+                                        <a class="btn btn-sm" onclick="add()" id="reset">Reset</a> --}}
                                     </div>
                                 </div>
                             </div>

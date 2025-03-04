@@ -17,9 +17,6 @@
                     <li class="nav-item">
                         <a class="nav-link active show" id="tab1" data-toggle="tab" href="#semua-data" role="tab"><i class="icon icon-home2"></i>Semua Data</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="tab2" data-toggle="tab" href="#tambah-data" role="tab"><i class="icon icon-plus"></i>Tambah Data</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -35,6 +32,7 @@
                                 <label for="pengungkit_indikator1_id_filter" class="col-form-label s-12 col-sm-4 col-md-4 col-xl-3 text-right font-weight-bolder">Indikator 3 </label>
                                 <div class="col-md-4">
                                     <select name="pengungkit_indikator3_id_filter" id="pengungkit_indikator3_id_filter" class="select2 form-control r-0 light s-12">
+                                        <option value="">semua</option>
                                         @foreach ($indikator3 as $i)
                                             <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator3 }}</option>
                                         @endforeach

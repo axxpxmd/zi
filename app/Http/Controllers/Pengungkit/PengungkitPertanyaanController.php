@@ -36,7 +36,9 @@ class PengungkitPertanyaanController extends Controller
         $pengungkit_indikator3_id = $request->pengungkit_indikator3_id;
 
         $datas = PengungkitPertanyaan::select("n_pertanyaan", "id", "pengungkit_indikator3_id", "tipe_jawaban")
-            ->where('pengungkit_indikator3_id', $pengungkit_indikator3_id)
+            ->when($pengungkit_indikator3_id, function ($query, $pengungkit_indikator3_id) {
+                return $query->where('pengungkit_indikator3_id', $pengungkit_indikator3_id);
+            })
             ->get();
 
         return DataTables::of($datas)
@@ -46,8 +48,24 @@ class PengungkitPertanyaanController extends Controller
                 // <a href='#' onclick='remove(" . $p->id . ")' class='text-danger mr-2' title='Hapus'><i class='icon icon-remove'></i></a>";
                 return "-";
             })
+            ->editColumn('tipe_jawaban', function ($p) {
+                $tipe_jawabans = [
+                    "1" => "%",
+                    "2" => "A/B/C",
+                    "3" => "A/B/C/D",
+                    "4" => "A/B/C/D/E",
+                    "5" => "JUMLAH",
+                    "6" => "NILAI (0-4)",
+                    "7" => "YA/TIDAK",
+                ];
+
+                return $tipe_jawabans[$p->tipe_jawaban];
+            })
+            ->editColumn('n_pertanyaan', function ($p) {
+                return "<a href='" . route($this->route . 'show', $p->id) . "' class='text-primary' title='Show Data'>" . $p->n_pertanyaan . "</a>";
+            })
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'n_pertanyaan'])
             ->toJson();
     }
 
@@ -89,9 +107,10 @@ class PengungkitPertanyaanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'n_pertanyaan' => 'required',
+            'n_pertanyaan' => 'required|string|max:255|unique:tm_pengungkit_pertanyaan,n_pertanyaan',
             'tipe_jawaban' => 'required|integer|between:1,7',
-            'pengungkit_indikator3_id' => 'required',
+            'pengungkit_indikator3_id' => 'required|exists:tm_pengungkit_indikator3,id',
+            'keterangan' => 'nullable|string',
         ]);
 
         PengungkitPertanyaan::create([
@@ -106,5 +125,14 @@ class PengungkitPertanyaanController extends Controller
             'pengungkit_indikator2_id' => $request->pengungkit_indikator2_id,
             'pengungkit_indikator3_id' => $request->pengungkit_indikator3_id
         ])->with('success', 'Data berhasil disimpan');
+    }
+
+    public function getTotalPertanyaanByIndikator3($pengungkit_indikator3_id)
+    {
+        $total = PengungkitPertanyaan::where('pengungkit_indikator3_id', $pengungkit_indikator3_id)->count();
+
+        return response()->json([
+            'total' => $total
+        ]);
     }
 }

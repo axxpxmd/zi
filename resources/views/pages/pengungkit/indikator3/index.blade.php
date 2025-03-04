@@ -34,7 +34,7 @@
                             <div class="row mb-2">
                                 <label for="pengungkit_indikator1_id_filter" class="col-form-label s-12 col-sm-4 col-md-4 col-xl-3 text-right font-weight-bolder">Indikator 1 </label>
                                 <div class="col-md-4">
-                                    <select name="pengungkit_indikator1_id_filter" id="pengungkit_indikator1_id_filter" class="select2 form-control r-0 light s-12">
+                                    <select id="pengungkit_indikator1_id_filter" class="select2 form-control r-0 light s-12">
                                         @foreach ($indikator1 as $i)
                                             <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator1 }}</option>
                                         @endforeach
@@ -44,7 +44,7 @@
                             <div class="row mb-2">
                                 <label for="pengungkit_indikator2_id_filter" class="col-form-label s-12 col-sm-4 col-md-4 col-xl-3 text-right font-weight-bolder">Indikator 2 </label>
                                 <div class="col-md-4">
-                                    <select name="pengungkit_indikator2_id_filter" id="pengungkit_indikator2_id_filter" class="select2 form-control r-0 light s-12">
+                                    <select id="pengungkit_indikator2_id_filter" class="select2 form-control r-0 light s-12">
                                         <option value="0">Semua</option>
                                         @foreach ($indikator2 as $i)
                                             <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator2 }}</option>
@@ -95,7 +95,7 @@
                                             <div class="form-group mt-1">
                                                 <label class="col-form-label s-12 col-md-2">Indikator 1</label>
                                                 <div class="col-md-6 p-0 bg-light">
-                                                    <select name="pengungkit_indikator1_id" id="pengungkit_indikator1_id" class="select2 form-control r-0 light s-12">
+                                                    <select id="pengungkit_indikator1_id" name="pengungkit_indikator1_id" class="select2 form-control r-0 light s-12">
                                                         <option value="">Pilih</option>
                                                         @foreach ($indikator1 as $i)
                                                             <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator1 }}</option>
@@ -106,11 +106,8 @@
                                             <div class="form-group mt-1">
                                                 <label class="col-form-label s-12 col-md-2">Indikator 2</label>
                                                 <div class="col-md-6 p-0 bg-light">
-                                                    <select name="pengungkit_indikator2_id" id="pengungkit_indikator2_id" class="select2 form-control r-0 light s-12">
+                                                    <select id="pengungkit_indikator2_id" name="pengungkit_indikator2_id" class="select2 form-control r-0 light s-12">
                                                         <option value="">Pilih</option>
-                                                        @foreach ($indikator2 as $i)
-                                                            <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator2 }}</option>
-                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -141,8 +138,8 @@
             url: "{{ route($route.'api') }}",
             method: 'POST',
             data: function (data) {
-                data.pengungkit_indikator2_id = $('#pengungkit_indikator2_id_filter').val();
-                data.pengungkit_indikator1_id = $('#pengungkit_indikator1_id_filter').val();
+                data.pengungkit_indikator2_id = $('#pengungkit_indikator2_id').val();
+                data.pengungkit_indikator1_id = $('#pengungkit_indikator1_id').val();
             }
         },
         columns: [
@@ -152,6 +149,52 @@
             {data: 'pengungkitPertanyaan', name: 'pengungkitPertanyaan', className: 'text-center'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
         ]
+    });
+
+    $('#pengungkit_indikator1_id_filter').on('change', function(){
+        val = $(this).val();
+        option = "<option value=''>&nbsp;</option>";
+        if(val == ""){
+            $('#pengungkit_indikator2_id_filter').html(option);
+        }else{
+            $('#pengungkit_indikator2_id_filter').html("<option value=''>Loading...</option>");
+            url = "{{ route('getIndikator2ByIndikator1', ':id') }}".replace(':id', val);
+            $.get(url, function(data){
+                if(data){
+                    $.each(data, function(index, value){
+                        option += "<option value='" + value.id + "'>" + value.n_pengungkit_indikator2 +"</li>";
+                    });
+                    $('#pengungkit_indikator2_id_filter').empty().html(option);
+
+                    $("#pengungkit_indikator2_id_filter").val($("#pengungkit_indikator2_id_filter option:first").val()).trigger("change.select2");
+                }else{
+                    $('#pengungkit_indikator2_id_filter').html(option);
+                }
+            }, 'JSON');
+        }
+    });
+
+    $('#pengungkit_indikator1_id').on('change', function(){
+        val = $(this).val();
+        option = "<option value=''>&nbsp;</option>";
+        if(val == ""){
+            $('#pengungkit_indikator2_id').html(option);
+        }else{
+            $('#pengungkit_indikator2_id').html("<option value=''>Loading...</option>");
+            url = "{{ route('getIndikator2ByIndikator1', ':id') }}".replace(':id', val);
+            $.get(url, function(data){
+                if(data){
+                    $.each(data, function(index, value){
+                        option += "<option value='" + value.id + "'>" + value.n_pengungkit_indikator2 +"</li>";
+                    });
+                    $('#pengungkit_indikator2_id').empty().html(option);
+
+                    $("#pengungkit_indikator2_id").val($("#pengungkit_indikator2_id option:first").val()).trigger("change.select2");
+                }else{
+                    $('#pengungkit_indikator2_id').html(option);
+                }
+            }, 'JSON');
+        }
     });
 
     function remove(id){

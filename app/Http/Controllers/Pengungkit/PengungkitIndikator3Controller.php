@@ -68,6 +68,11 @@ class PengungkitIndikator3Controller extends Controller
         $route = $this->route;
         $title = $this->title;
 
+        $request->validate([
+            'pengungkit_indikator1_id' => 'required|exists:tm_pengungkit_indikator1,id',
+            'pengungkit_indikator2_id' => 'required|exists:tm_pengungkit_indikator2,id',
+        ]);
+
         $pengungkit_indikator1_id = $request->pengungkit_indikator1_id;
         $pengungkit_indikator2_id = $request->pengungkit_indikator2_id;
 
@@ -139,5 +144,12 @@ class PengungkitIndikator3Controller extends Controller
         PengungkitIndikator3::destroy($id);
 
         return response()->json(['status' => 'success', 'message' => 'Data berhasil dihapus']);
+    }
+
+    public function getIndikator2ByIndikator1($indikator1_id)
+    {
+        $indikator2 = PengungkitIndikator2::select("n_pengungkit_indikator2", "id")->where('pengungkit_indikator1_id', $indikator1_id)->get();
+
+        return response()->json($indikator2);
     }
 }

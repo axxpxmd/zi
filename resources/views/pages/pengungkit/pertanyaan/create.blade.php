@@ -30,7 +30,7 @@
                     <div class="card">
                         <h6 class="card-header"><strong>Tambah Data</strong></h6>
                         <div class="card-body">
-                            <form action="{{ route($route.'store') }}" class="needs-validation" method="POST"  enctype="multipart/form-data" novalidate>
+                            <form action="{{ route($route.'store') }}" class="needs-validation" method="POST" enctype="multipart/form-data" novalidate>
                                 {{ method_field('POST') }}
                                 @csrf
                                 <input type="hidden" name="pengungkit_indikator1_id" value="{{ $pengungkit_indikator1_id }}">
@@ -39,21 +39,24 @@
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="tahun" class="text-right s-12 col-md-2">Indikator 1</label>
+                                            <label class="text-right s-12 col-md-2">Indikator 1</label>
                                             <input type="text" readonly class="form-control r-0 light s-12 col-md-4" autocomplete="off" value="{{ $indikator3->pengungkitIndikator2->pengungkitIndikator1->n_pengungkit_indikator1 }}"/>
                                         </div>
                                         <div class="form-group m-0">
-                                            <label for="tahun" class="text-right s-12 col-md-2">Indikator 2</label>
+                                            <label class="text-right s-12 col-md-2">Indikator 2</label>
                                             <input type="text" readonly class="form-control r-0 light s-12 col-md-4" autocomplete="off" value="{{ $indikator3->pengungkitIndikator2->n_pengungkit_indikator2 }}"/>
                                         </div>
                                         <div class="form-group m-0">
                                             <label class="col-form-label s-12 col-md-2">Indikator 3<span class="text-danger ml-1">*</span></label>
                                             <div class="col-md-4 p-0 bg-light">
-                                                <select name="pengungkit_indikator3_id" id="pengungkit_indikator3_id" class="select2 form-control r-0 light s-12">
+                                                <select name="pengungkit_indikator3_id" id="pengungkit_indikator3_id" class="select2 form-control r-0 light s-12" required onchange="updateTotalPertanyaan()">
                                                     @foreach ($indikators3 as $i)
-                                                        <option value="{{ $i->id }}" {{ $i->id == $pengungkit_indikator3_id ? 'selected' : '-' }}>{{ $i->n_pengungkit_indikator3 }} ( {{ $i->bobot }} )</option>
+                                                        <option value="{{ $i->id }}" {{ $i->id == $pengungkit_indikator3_id ? 'selected' : '' }}>{{ $i->n_pengungkit_indikator3 }} ( {{ $i->bobot }} )</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <p class="fs-12 font-weight-bold">Total Pertanyaan : <span id="total_pertanyaan"></span></p>
                                             </div>
                                         </div>
                                         <hr>
@@ -112,5 +115,18 @@
         'alignleft aligncenter alignright alignjustify | lineheight |' +
         'bullist numlist outdent indent | removeformat | help'
     });
+
+    updateTotalPertanyaan();
+    function updateTotalPertanyaan() {
+        var indikator3Id = document.getElementById('pengungkit_indikator3_id').value;
+        $.ajax({
+            url: '{{ route('getTotalPertanyaanByIndikator3', '') }}/' + indikator3Id,
+            type: 'GET',
+            success: function(data) {
+                console.log(data);
+                document.getElementById('total_pertanyaan').innerText = data.total;
+            }
+        });
+    }
 </script>
 @endsection
