@@ -30,18 +30,18 @@
                     <div class="card">
                         <h6 class="card-header"><strong>Edit Data</strong></h6>
                         <div class="card-body">
-                            <form action="{{ route($route.'update', $data->id) }}" class="needs-validation" method="POST"  enctype="multipart/form-data" novalidate>
+                            <form action="{{ route($route.'update', $pengungkitPertanyaan->id) }}" class="needs-validation" method="POST"  enctype="multipart/form-data" novalidate>
                                 {{ method_field('PATCH') }}
                                 @csrf
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
                                             <label class="text-right s-12 col-md-2">Indikator 1</label>
-                                            <input type="text" readonly class="form-control r-0 light s-12 col-md-4" autocomplete="off" value="{{ $data->pengungkitIndikator3->pengungkitIndikator2->pengungkitIndikator1->n_pengungkit_indikator1 }}"/>
+                                            <input type="text" readonly class="form-control r-0 light s-12 col-md-4" autocomplete="off" value="{{ $pengungkitPertanyaan->pengungkitIndikator3->pengungkitIndikator2->pengungkitIndikator1->n_pengungkit_indikator1 }}"/>
                                         </div>
                                         <div class="form-group m-0">
                                             <label class="text-right s-12 col-md-2">Indikator 2</label>
-                                            <input type="text" readonly class="form-control r-0 light s-12 col-md-4" autocomplete="off" value="{{ $data->pengungkitIndikator3->pengungkitIndikator2->n_pengungkit_indikator2 }}"/>
+                                            <input type="text" readonly class="form-control r-0 light s-12 col-md-4" autocomplete="off" value="{{ $pengungkitPertanyaan->pengungkitIndikator3->pengungkitIndikator2->n_pengungkit_indikator2 }}"/>
                                         </div>
                                         <hr>
                                         <div class="form-group m-0">
@@ -49,14 +49,14 @@
                                             <div class="col-md-4 p-0 bg-light">
                                                 <select name="pengungkit_indikator3_id" id="pengungkit_indikator3_id" class="select2 form-control r-0 light s-12" required>
                                                     @foreach ($indikators3 as $i)
-                                                        <option value="{{ $i->id }}" {{ $i->id == $data->pengungkit_indikator3_id ? 'selected' : '' }}>{{ $i->n_pengungkit_indikator3 }} ( {{ $i->bobot }} )</option>
+                                                        <option value="{{ $i->id }}" {{ $i->id == $pengungkitPertanyaan->pengungkit_indikator3_id ? 'selected' : '' }}>{{ $i->n_pengungkit_indikator3 }} ( {{ $i->bobot }} )</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group mt-1">
                                             <label for="n_pertanyaan" class="text-right s-12 col-md-2">Pertanyaan<span class="text-danger ml-1">*</span></label>
-                                            <textarea type="text" name="n_pertanyaan" id="n_pertanyaan" rows="5" class="form-control r-0 light s-12 col-md-4" autocomplete="off" required>{{ $data->n_pertanyaan }}</textarea>
+                                            <textarea type="text" name="n_pertanyaan" id="n_pertanyaan" rows="5" class="form-control r-0 light s-12 col-md-4" autocomplete="off" required>{{ $pengungkitPertanyaan->n_pertanyaan }}</textarea>
                                         </div>
                                         <div class="form-group m-0">
                                             <label class="col-form-label s-12 col-md-2">Tipe Jawaban<span class="text-danger ml-1">*</span></label>
@@ -64,7 +64,7 @@
                                                 <select name="tipe_jawaban" id="tipe_jawaban" class="select2 form-control r-0 light s-12" required>
                                                     <option value="">Pilih</option>
                                                     @foreach ($tipe_jawabans as $key => $i)
-                                                        <option value="{{ $key }}" {{ $key == $data->tipe_jawaban ? 'selected' : '-' }}>{{ $i }}</option>
+                                                        <option value="{{ $key }}" {{ $key == $pengungkitPertanyaan->tipe_jawaban ? 'selected' : '-' }}>{{ $i }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -72,7 +72,7 @@
                                         <div class="table-responsive">
                                             <div class="form-group m-0 mt-2">
                                                 <label for="keterangan" class="text-right s-12 col-md-2">Keterangan<span class="text-danger ml-1">*</span></label>
-                                                <textarea name="keterangan" class="form-control r-0 light s-12 col-md-10" id="tiny">{{ $data->keterangan }}</textarea>
+                                                <textarea name="keterangan" class="form-control r-0 light s-12 col-md-10" id="tiny">{{ $pengungkitPertanyaan->keterangan }}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group mt-2">
