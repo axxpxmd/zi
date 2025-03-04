@@ -135,4 +135,50 @@ class PengungkitPertanyaanController extends Controller
             'total' => $total
         ]);
     }
+
+    public function show($id)
+    {
+        $route = $this->route;
+        $title = $this->title;
+
+        $data = PengungkitPertanyaan::findOrFail($id);
+        $indikators3 = PengungkitIndikator3::select("id", "n_pengungkit_indikator3", "bobot")->get();
+
+        $tipe_jawabans = [
+            "1" => "%",
+            "2" => "A/B/C",
+            "3" => "A/B/C/D",
+            "4" => "A/B/C/D/E",
+            "5" => "JUMLAH",
+            "6" => "NILAI (0-4)",
+            "7" => "YA/TIDAK",
+        ];
+
+        return view($this->view . 'show', compact(
+            'route',
+            'title',
+            'data',
+            'indikators3',
+            'tipe_jawabans'
+        ));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'n_pertanyaan' => 'required|string|max:255|unique:tm_pengungkit_pertanyaan,n_pertanyaan,' . $id,
+            'tipe_jawaban' => 'required|integer|between:1,7',
+            'pengungkit_indikator3_id' => 'required|exists:tm_pengungkit_indikator3,id',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        PengungkitPertanyaan::findOrFail($id)->update([
+            'n_pertanyaan' => $request->n_pertanyaan,
+            'tipe_jawaban' => $request->tipe_jawaban,
+            'pengungkit_indikator3_id' => $request->pengungkit_indikator3_id,
+            'keterangan' => $request->keterangan
+        ]);
+
+        return redirect()->route($this->route . 'show', $id)->with('success', 'Data berhasil diupdate');
+    }
 }

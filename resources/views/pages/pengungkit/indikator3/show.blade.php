@@ -36,11 +36,11 @@
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="tahun" class="text-right s-12 col-md-2">Indikator 1</label>
+                                            <label class="text-right s-12 col-md-2">Indikator 1</label>
                                             <input type="text" readonly class="form-control r-0 light s-12 col-md-4" autocomplete="off" value="{{ $data->pengungkitIndikator2->pengungkitIndikator1->n_pengungkit_indikator1 }}"/>
                                         </div>
                                         <div class="form-group m-0">
-                                            <label for="tahun" class="text-right s-12 col-md-2">Indikator 2</label>
+                                            <label class="text-right s-12 col-md-2">Indikator 2</label>
                                             <input type="text" readonly class="form-control r-0 light s-12 col-md-4" autocomplete="off" value="{{ $data->pengungkitIndikator2->n_pengungkit_indikator2 }}"/>
                                         </div>
                                         <hr>
