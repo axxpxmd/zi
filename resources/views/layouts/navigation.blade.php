@@ -81,7 +81,7 @@
     @can('data-hasil')
     <li class="header light"><strong>DATA HASIL</strong></li>
     <li class="no-b">
-        <a href="{{ route('pengungkit-indikator-1.index') }}">
+        <a href="{{ route('hasil-indikator.index') }}">
             <i class="icon icon-document-text text-success s-18"></i>
             <span>Indikator 1</span>
         </a>

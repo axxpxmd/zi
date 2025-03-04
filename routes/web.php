@@ -91,4 +91,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('pengungkit-pertanyaan/api', 'PengungkitPertanyaanController@api')->name('pengungkit-pertanyaan.api');
         Route::get('get-total-pertanyaan-by-indikator3/{indikator3_id}', 'PengungkitPertanyaanController@getTotalPertanyaanByIndikator3')->name('getTotalPertanyaanByIndikator3');
     });
+
+    // Hasil
+    Route::namespace('Hasil')->group(function () {
+        // Indikator
+        Route::resource('hasil-indikator', 'HasilIndikatorController');
+        Route::post('hasil-indikator/api', 'HasilIndikatorController@api')->name('hasil-indikator.api');
+
+    });
 });
