@@ -29,12 +29,12 @@
                     <div class="card-body">
                         <div class="container col-md-12">
                             <div class="row mb-2">
-                                <label for="pengungkit_indikator1_id_filter" class="col-form-label s-12 col-sm-4 col-md-4 col-xl-3 text-right font-weight-bolder">Indikator 3 </label>
+                                <label for="hasil_indikator_id_filter" class="col-form-label s-12 col-sm-4 col-md-4 col-xl-3 text-right font-weight-bolder">Indikator</label>
                                 <div class="col-md-4">
-                                    <select name="pengungkit_indikator3_id_filter" id="pengungkit_indikator3_id_filter" class="select2 form-control r-0 light s-12">
+                                    <select name="hasil_indikator_id_filter" id="hasil_indikator_id_filter" class="select2 form-control r-0 light s-12">
                                         <option value="">semua</option>
-                                        @foreach ($indikator3 as $i)
-                                            <option value="{{ $i->id }}">{{ $i->n_pengungkit_indikator3 }}</option>
+                                        @foreach ($indikators as $i)
+                                            <option value="{{ $i->id }}">{{ $i->n_hasil_indikator }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -56,7 +56,8 @@
                                     <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <th width="5%">No</th>
-                                            <th width="75%">Nama</th>
+                                            <th width="65%">Nama</th>
+                                            <th width="10%">Bobot</th>
                                             <th width="10%">Tipe Jawaban</th>
                                             <th width="5%"></th>
                                         </thead>
@@ -83,12 +84,13 @@
             url: "{{ route($route.'api') }}",
             method: 'POST',
             data: function (data) {
-                data.pengungkit_indikator3_id = $('#pengungkit_indikator3_id_filter').val();
+                data.hasil_indikator_id = $('#hasil_indikator_id_filter').val();
             }
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},
             {data: 'n_pertanyaan', name: 'n_pertanyaan'},
+            {data: 'bobot', name: 'bobot', className: 'text-center'},
             {data: 'tipe_jawaban', name: 'tipe_jawaban', className: 'text-center'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
         ]

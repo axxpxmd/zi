@@ -83,7 +83,13 @@
     <li class="no-b">
         <a href="{{ route('hasil-indikator.index') }}">
             <i class="icon icon-document-text text-success s-18"></i>
-            <span>Indikator 1</span>
+            <span>Indikator</span>
+        </a>
+    </li>
+    <li class="no-b">
+        <a href="{{ route('hasil-pertanyaan.index') }}">
+            <i class="icon icon-document-text text-primary s-18"></i>
+            <span>Pertanyaan</span>
         </a>
     </li>
     @endcan

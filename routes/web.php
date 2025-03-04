@@ -98,5 +98,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('hasil-indikator', 'HasilIndikatorController');
         Route::post('hasil-indikator/api', 'HasilIndikatorController@api')->name('hasil-indikator.api');
 
+        // Pertanyaan
+        Route::resource('hasil-pertanyaan', 'HasilPertanyaanController');
+        Route::post('hasil-pertanyaan/api', 'HasilPertanyaanController@api')->name('hasil-pertanyaan.api');
+
     });
 });
