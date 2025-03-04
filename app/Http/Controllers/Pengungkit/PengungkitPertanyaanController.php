@@ -53,7 +53,7 @@ class PengungkitPertanyaanController extends Controller
 
         return DataTables::of($datas)
             ->addColumn('action', function ($p) {
-                return "-";
+                return "<a href='#' onclick='remove(" . $p->id . ")' class='text-danger mr-2' title='Hapus'><i class='icon icon-remove'></i></a>";
             })
             ->editColumn('tipe_jawaban', function ($p) {
                 return $this->tipeJawabans[$p->tipe_jawaban];
@@ -153,5 +153,11 @@ class PengungkitPertanyaanController extends Controller
         ));
 
         return redirect()->route($this->route . 'show', $pengungkitPertanyaan->id)->with('success', 'Data berhasil diupdate');
+    }
+
+    public function destroy($id){
+        PengungkitPertanyaan::destroy($id);
+
+        return response()->json(['status' => 'success', 'message' => 'Data berhasil dihapus']);
     }
 }

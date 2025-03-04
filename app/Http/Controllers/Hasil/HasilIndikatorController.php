@@ -33,9 +33,9 @@ class HasilIndikatorController extends Controller
 
         return DataTables::of($datas)
             ->addColumn('action', function ($p) {
-                return "
-                <a href='#' onclick='edit(" . $p->id . ")' class='text-success' title='Edit'><i class='icon icon-edit mr-1'></i></a>
-                <a href='#' onclick='remove(" . $p->id . ")' class='text-danger mr-2' title='Hapus'><i class='icon icon-remove'></i></a>";
+                // return "
+                // <a href='#' onclick='edit(" . $p->id . ")' class='text-success' title='Edit'><i class='icon icon-edit mr-1'></i></a>
+                // <a href='#' onclick='remove(" . $p->id . ")' class='text-danger mr-2' title='Hapus'><i class='icon icon-remove'></i></a>";
                 return "-";
             })
             ->addIndexColumn()

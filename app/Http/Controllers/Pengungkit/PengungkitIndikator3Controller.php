@@ -50,7 +50,11 @@ class PengungkitIndikator3Controller extends Controller
 
         return DataTables::of($datas)
             ->addColumn('action', function ($p) {
-                return "<a href='#' onclick='remove(" . $p->id . ")' class='text-danger mr-2' title='Hapus'><i class='icon icon-remove'></i></a>";
+                if ($p->pengungkitPertanyaan->count() > 0) {
+                    return "<span class='text-muted' title='Tidak bisa dihapus karena sudah dipakai di pertanyaan'><i class='icon icon-lock'></i></span>";
+                } else {
+                    return "<a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus'><i class='icon icon-remove'></i></a>";
+                }
             })
             ->editColumn('n_pengungkit_indikator3', function ($p) {
                 return "<a href='" . route($this->route . 'show', $p->id) . "' class='text-primary' title='Show Data'>" . $p->n_pengungkit_indikator3 . "</a>";
