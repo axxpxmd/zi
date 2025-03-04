@@ -138,8 +138,8 @@
             url: "{{ route($route.'api') }}",
             method: 'POST',
             data: function (data) {
-                data.pengungkit_indikator2_id = $('#pengungkit_indikator2_id').val();
-                data.pengungkit_indikator1_id = $('#pengungkit_indikator1_id').val();
+                data.pengungkit_indikator2_id = $('#pengungkit_indikator2_id_filter').val();
+                data.pengungkit_indikator1_id = $('#pengungkit_indikator1_id_filter').val();
             }
         },
         columns: [
