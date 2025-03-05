@@ -93,4 +93,13 @@
         </a>
     </li>
     @endcan
+    @can('form')
+    <li class="header light"><strong>FORM</strong></li>
+    <li class="no-b">
+        <a href="{{ route('form-pengisian.index') }}">
+            <i class="icon icon-document-text text-danger s-18"></i>
+            <span>Pengisian</span>
+        </a>
+    </li>
+    @endcan
 </ul>

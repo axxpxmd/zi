@@ -101,6 +101,12 @@ Route::group(['middleware' => ['auth']], function () {
         // Pertanyaan
         Route::resource('hasil-pertanyaan', 'HasilPertanyaanController');
         Route::post('hasil-pertanyaan/api', 'HasilPertanyaanController@api')->name('hasil-pertanyaan.api');
+    });
 
+    // Form
+    Route::namespace('Form')->group(function () {
+        // Pengisian
+        Route::resource('form-pengisian', 'FormPengisianController');
+        Route::post('form-pengisian/api', 'FormPengisianController@api')->name('form-pengisian.api');
     });
 });

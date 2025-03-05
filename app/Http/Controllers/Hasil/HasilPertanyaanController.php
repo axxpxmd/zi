@@ -10,11 +10,10 @@ use Illuminate\Http\Request;
 
 // Base Controller
 use App\Http\Controllers\Controller;
+
+// Models
 use App\Models\HasilIndikator;
 use App\Models\HasilPertanyaan;
-// Models
-use App\Models\PengungkitIndikator3;
-use App\Models\PengungkitPertanyaan;
 
 class HasilPertanyaanController extends Controller
 {
