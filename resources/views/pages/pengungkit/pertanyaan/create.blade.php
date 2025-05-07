@@ -98,7 +98,7 @@
 @endsection
 @section('script')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdn.tiny.cloud/1/asaiytuil3ir60nu7aw6buvvgkzso2azpt3cgv2iss02fstk/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/ius1lj8uc2wk23nqjuwc547qcfiuyz2kv13l712zt56hj2s7/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@2/dist/tinymce-jquery.min.js"></script>
 <script type="text/javascript">
     $('textarea#tiny').tinymce({
